@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ncs_dataio_exam.mapper.DepartmentMapper">
+	<sql id="selectSQL">
+		SELECT DEPTNO ,DEPTNAME ,FLOOR FROM DEPARTMENT
+	</sql>
+	
+	<sql id="whereSQL">
+		<where>
+			<if test="deptNo != null">
+				deptno = #{deptNo}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectDepartmentByAll" resultType="Department">
+		<include refid="selectSQL"/>
+	</select>
+	
+	<select id="selectDepartmentByNo" parameterType="Department" resultType="Department">
+		<include refid="selectSQL"/>
+		<include refid="whereSQL"/>
+	</select>
+	
+	<insert id="insertDepartment" parameterType="Department">
+		insert into department values(#{deptNo}, #{deptName}, #{floor})
+	</insert>
+	
+	<update id="updateDepartment" parameterType="Department">
+		update department
+		<set>
+	        <if test="deptName != null">deptName=#{deptName},</if>
+	        <if test="floor != null">floor=#{floor},</if>
+	    </set>
+		<include refid="whereSQL"/>
+	</update>
+	
+	<delete id="deleteDepartment" parameterType="Department">
+		delete from department
+		<include refid="whereSQL"/>
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+

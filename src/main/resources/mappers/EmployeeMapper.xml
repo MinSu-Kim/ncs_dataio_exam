@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ncs_dataio_exam.mapper.EmployeeMapper">
+	<sql id="selectSQL">
+		SELECT EMPNO ,EMPNAME ,TITLE ,MANAGER ,SALARY ,DNO 
+		  FROM EMPLOYEE
+	</sql>
+	
+	<sql id="whereSQL">
+		<where>
+			<if test="empNo != null">
+				EMPNO = #{empNo}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="setSQL">
+		<set>
+	        <if test="empName != null">empName=#{empName},</if>
+	        <if test="title != null">title=#{title},</if>
+	        <if test="manager != null">manager=#{manager.empNo},</if>
+	        <if test="salary > 0">salary=#{salary},</if>
+	        <if test="dept != null">dno=#{dept.deptNo},</if>
+	    </set>
+	</sql>
+	
+	<resultMap type="Employee" id="resEmp">
+		<result column="manager" property="manager.empNo"/>
+		<result column="dno" property="dept.deptNo"/>
+	</resultMap>
+	
+	<select id="selectEmployeeAll" resultMap="resEmp">
+		<include refid="selectSQL"/>
+	</select>
+	
+	<select id="selectEmployeeByNo" resultMap="resEmp" parameterType="int">
+		<include refid="selectSQL"/>
+		WHERE EMPNO = #{empNo}
+	</select>
+	
+	<insert id="insertEmployee" parameterType="Employee">
+		INSERT INTO EMPLOYEE (EMPNO, EMPNAME, TITLE, MANAGER, SALARY, DNO)
+        VALUES (#{empNo}, #{empName}, #{title}, #{manager.empNo}, #{salary}, #{dept.deptNo})
+	</insert>
+	
+	<delete id="deleteEmployee" parameterType="Employee">
+		DELETE FROM EMPLOYEE
+	    <include refid="whereSQL"/>
+	</delete>
+	
+	<update id="updateEmployee" parameterType="Employee">
+		UPDATE EMPLOYEE
+		<include refid="setSQL"/>
+	    <include refid="whereSQL"/>
+	</update>
+</mapper>
