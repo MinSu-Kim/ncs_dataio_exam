@@ -6,7 +6,10 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({ContextDataSource.class, ContextSqlSession.class})
-@ComponentScan(basePackages = {"ncs_dataio_exam.mapper"})
+@ComponentScan(basePackages = {
+        "ncs_dataio_exam.mapper",
+        "ncs_dataio_exam.controller",
+        "ncs_dataio_exam.service"})
 public class ContextRoot {
 
 }
