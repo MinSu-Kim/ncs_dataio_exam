@@ -38,7 +38,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         }finally {
             res = mapper.insertEmployee(employee);
         }
-        
         return res;
     }
 
