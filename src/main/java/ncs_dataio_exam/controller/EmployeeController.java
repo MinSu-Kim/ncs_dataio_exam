@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -81,9 +83,14 @@ public class EmployeeController {
         return ResponseEntity.ok(empService.modifyEmployee(employee));
     }
     
-    @DeleteMapping(value = "/employees/{empNo}")
-    public ResponseEntity<Object> deleteEmployee(@PathVariable int empNo){
+    @PostMapping("/employees/delete")
+    public ResponseEntity<Object> deleteEmployee(@RequestParam(value="empNo") int empNo){
+        System.out.println("empNo > " + empNo);
         return ResponseEntity.ok(empService.removeEmployee(new Employee(empNo)));
     }
-    
+    /*
+     * @DeleteMapping(value = "/employees/{empNo}") public ResponseEntity<Object>
+     * deleteEmployee(@PathVariable int empNo){ return
+     * ResponseEntity.ok(empService.removeEmployee(new Employee(empNo))); }
+     */    
 }

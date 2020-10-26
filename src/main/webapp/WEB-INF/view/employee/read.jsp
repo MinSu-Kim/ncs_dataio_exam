@@ -22,17 +22,13 @@ $(function(){
     });
     
     $('#remove').on("click", function(){
-        var data = $('#empNo').val();
-        $.ajax({
-            type : "delete",
-            url : "/delEmployee/"+data,
-            cache : false,
-            success : function(data) {
-                alert("삭제." + data);
-                window.location.href = "/ncs_dataio_exam/emplist";
-            }
+        var data = {empNo :  $('#empNo').val()};
+        alert("data > " + data);
+        $.post("/ncs_dataio_exam/employees/delete", data, function(){
+            window.location.href = "/ncs_dataio_exam/emplist";
         });
    });
+
 });
 </script>
 </head>
