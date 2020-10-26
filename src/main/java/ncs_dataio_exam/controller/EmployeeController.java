@@ -43,7 +43,6 @@ public class EmployeeController {
         return empService.getLists();
     }
     
-
     @GetMapping("/employees/{empNo}")
     public ModelAndView employee(@PathVariable int empNo, HttpServletResponse response, HttpSession session) throws IOException {
         Employee employee = empService.getEmployee(empNo);
@@ -56,7 +55,7 @@ public class EmployeeController {
         return mav;
     }
    
-    @PostMapping("/employees")
+    @PostMapping("/create")
     public ResponseEntity<Object> newEmployee(@RequestBody Employee employee, HttpServletResponse response) throws IOException {
         try {
             empService.registerEmployee(employee);

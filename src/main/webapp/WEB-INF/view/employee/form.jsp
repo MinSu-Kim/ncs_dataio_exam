@@ -30,7 +30,7 @@ $(function() {
 		alert(newEmp.empNo);
 		
 		$.ajax({
-		    url: "/ncs_dataio_exam/employees",
+		    url: "/ncs_dataio_exam/create",
 		    type: 'POST',
 		    contentType:"application/json; charset=utf-8",
 		    dataType: 'json',

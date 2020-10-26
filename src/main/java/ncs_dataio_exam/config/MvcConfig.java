@@ -32,7 +32,7 @@ public class MvcConfig implements WebMvcConfigurer{
  
     /*다국어 설정*/
     @Bean
-    public MessageSource messageSource() { // 빈의 아이디를 반드시 “messageSource”로 지정해야 됨
+    public MessageSource messageSource() { // 빈의 아이디를 반드시 messageSource로 지정해야 됨
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
         ms.setBasename("message.label");
         ms.setDefaultEncoding("UTF-8");
