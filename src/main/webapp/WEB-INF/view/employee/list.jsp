@@ -15,6 +15,10 @@
 </head>
 <script>
 $(function(){
+    $('#new').on("click", function() {
+    	window.location.href = "employeeForm";
+    });
+    
      $.get("employees", function(json){
          var dataLength = json.length;
          if ( dataLength >=1 ){
@@ -40,8 +44,11 @@ $(function(){
 </script>
 
 <body>
-
-<h2><spring:message code="employee" /><spring:message code="list" /></h2>
+<button id="new">
+    추가
+</button>
+<h2>
+<spring:message code="employee" /><spring:message code="list" /></h2>
 <table border=1>
 	<thead>
 	    <td><spring:message code="eno" /></td>
@@ -66,7 +73,7 @@ $(function(){
 
 <hr>
 <h2>사원목록</h2>
-   <table>
+   <table border="1">
        <thead>
            <td>사원번호</td>
            <td>사원명</td>

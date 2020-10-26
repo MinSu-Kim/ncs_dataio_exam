@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (emp != null) {
                 throw new DuplicateEmployeeException("dup empNo " + employee.getEmpNo());
             }
-        }catch(EmptyResultDataAccessException e) {
+        }finally {
             res = mapper.insertEmployee(employee);
         }
         

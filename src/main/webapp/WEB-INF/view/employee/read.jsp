@@ -7,10 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title><spring:message code="employee" /><spring:message
-		code="info" /></title>
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title><spring:message code="employee" /> <spring:message code="info" /></title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(function(){
     $('#list').on("click", function(){
@@ -18,13 +16,13 @@ $(function(){
     });
     
     $('#modify').on("click", function() {
-    	window.location.href = "/ncs_dataio_exam/employeeForm";
+    	window.location.href = "/ncs_dataio_exam/update";
     });
     
     $('#remove').on("click", function(){
         var data = {empNo :  $('#empNo').val()};
         alert("data > " + data);
-        $.post("/ncs_dataio_exam/employees/delete", data, function(){
+        $.post("/ncs_dataio_exam/delete", data, function(){
             window.location.href = "/ncs_dataio_exam/emplist";
         });
    });

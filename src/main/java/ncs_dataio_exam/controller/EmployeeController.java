@@ -1,26 +1,20 @@
 package ncs_dataio_exam.controller;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,6 +38,7 @@ public class EmployeeController {
     }
     
     @GetMapping("/employees")
+    @ResponseBody
     public List<Employee> employees(){
         return empService.getLists();
     }
@@ -56,41 +51,39 @@ public class EmployeeController {
             throw new EmployeeNotFoundException();
         }
         ModelAndView mav = new ModelAndView();
-//        mav.addObject("employee", employee);
         session.setAttribute("employee", employee);
         mav.setViewName("/employee/read");
         return mav;
     }
-
+   
     @PostMapping("/employees")
-    public ResponseEntity<Object> newEmployee(@Valid @RequestBody Employee employee, Errors errors, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Object> newEmployee(@RequestBody Employee employee, HttpServletResponse response) throws IOException {
         try {
-            if (errors.hasErrors()) {
-                return ResponseEntity.badRequest().build();
-            }
-            int newEmpNo = empService.registerEmployee(employee);
-            URI uri = URI.create("/employees/" + newEmpNo);
-            return ResponseEntity.created(uri).build();
-
-        }catch (DuplicateEmployeeException e) {
-            errors.rejectValue("empNo", "duplicate");
+            empService.registerEmployee(employee);
+            return ResponseEntity.ok(HttpStatus.CREATED);
+        } catch (DuplicateEmployeeException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
-    
-    @PatchMapping(value = "/employees/{empNo}")
-    public ResponseEntity<Object> updateEmployee(@RequestBody Employee employee, @PathVariable("empNo") int empNo){
+         
+    @PostMapping("/update")
+    @ResponseBody
+    public ResponseEntity<Object> updateEmployee(@RequestBody Employee employee){
         return ResponseEntity.ok(empService.modifyEmployee(employee));
     }
     
-    @PostMapping("/employees/delete")
+    @GetMapping("/update")
+    @ResponseBody
+    public ModelAndView update(Employee employee, HttpSession session){
+        employee = (Employee) session.getAttribute("employee");
+        ModelAndView nav =new ModelAndView("/employee/update", "employee", employee);
+        return nav;
+    }
+    
+    @PostMapping("/delete")
+    @ResponseBody
     public ResponseEntity<Object> deleteEmployee(@RequestParam(value="empNo") int empNo){
-        System.out.println("empNo > " + empNo);
         return ResponseEntity.ok(empService.removeEmployee(new Employee(empNo)));
     }
-    /*
-     * @DeleteMapping(value = "/employees/{empNo}") public ResponseEntity<Object>
-     * deleteEmployee(@PathVariable int empNo){ return
-     * ResponseEntity.ok(empService.removeEmployee(new Employee(empNo))); }
-     */    
+    
 }
