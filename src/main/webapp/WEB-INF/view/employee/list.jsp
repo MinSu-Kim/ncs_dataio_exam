@@ -22,7 +22,7 @@ $(function(){
              for ( i=0 ; i < dataLength ; i++){
                 sCont += "<tr>";
                 sCont += "<td>" + json[i].empNo + "</td>";
-                sCont += "<td>" + json[i].empName + "</a></td>";
+                sCont += "<td><a href='employees/"+json[i].empNo+"'>" + json[i].empName + "</a></td>";
                 sCont += "<td>" + json[i].title + "</td>";
                 if (json[i].manager != null){
                     sCont += "<td>" + json[i].manager.empNo + "</td>";

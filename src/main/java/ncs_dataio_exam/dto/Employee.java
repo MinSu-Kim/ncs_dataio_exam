@@ -1,11 +1,19 @@
 package ncs_dataio_exam.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class Employee {
+    @NotEmpty
     private int empNo;
+    @NotEmpty
     private String empName;
+    @NotEmpty
     private String title;
+    @NotEmpty
     private Employee manager;
+    @NotEmpty
     private int salary;
+    @NotEmpty
     private Department dept;
 
     public Employee() {
