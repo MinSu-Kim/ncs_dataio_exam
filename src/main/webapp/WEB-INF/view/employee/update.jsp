@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title><spring:message code="employee" /><spring:message
-		code="info" /></title>
+		code="info" /> 수정</title>
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -56,7 +56,7 @@ $(function() {
 <body>
 	<h2>
 		<spring:message code="employee" />
-		<spring:message code="info" />
+		<spring:message code="info" /> 수정
 	</h2>
 	<form:form modelAttribute="employee">
 		<p>
